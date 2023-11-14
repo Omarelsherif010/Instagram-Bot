@@ -1,4 +1,5 @@
 from instagrapi import Client
+from instagrapi.types import Usertag
 import time
 
 # Replace 'your_username' and 'your_password' with your Instagram credentials
@@ -9,14 +10,46 @@ password = 'Collegeboard@010#instagram'
 client = Client()
 client.login(username, password)
 
-# try: direct_v2_inbox()
-direct_messages = client.direct_pending_inbox()
-print(f"Direct Messages Received: {direct_messages}")
-# for message in direct_messages:
-#     print(f"Message: {message.text}")
-#     print(f"Sender ID: {message.sender_id}")
-#     print(f"Timestamp: {message.timestamp}")
-#     print("----------------------------------")
+username_list = ["asmaa_elsherif_010", "s_a_i_d___mp"]
+users_id_list = []
+thread_id_list = []
+
+for item in username_list:
+    user_id = client.user_id_from_username(item)
+    users_id_list.append(user_id)
+
+# function to get direct messages from list of users
+# def get_direct_messages_from_users(users_id_list):
+#     messages_list = []
+#     for user in users_id_list:
+#         direct_messages = client.direct_thread_by_participants(user_ids=[user]) 
+        
+#         thread_id = direct_messages['thread']['thread_id']
+#         thread_id_list.append(thread_id)
+
+#         message = direct_messages['thread']['items'][0]['text']
+#         messages_list.append(message)
+#         # print(f"messages Received: {messages_list}")
+#     return messages_list
+
+# print(get_direct_messages_from_users(users_id_list), thread_id_list)
+
+
+for user in users_id_list:
+        direct_messages = client.direct_thread_by_participants(user_ids=[user]) 
+        
+        thread_id = direct_messages['thread']['thread_id']
+        thread_id_list.append(thread_id)
+thread_details = client.direct_thread(thread_id=thread_id_list[0])
+link_to_post = thread_details['messages']
+print(f"Thread Details: {link_to_post}")
+
+media = client.photo_upload(
+    path=r"image_path",
+    caption="caption_you_want",
+    usertags=[Usertag(user=user, x=0.5, y=0.5)]
+)
+
 # # Function to handle reposting from personal messages
 # def repost_from_messages():
 #     # Get direct messages
