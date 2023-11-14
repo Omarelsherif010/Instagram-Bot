@@ -34,7 +34,7 @@ for item in username_list:
 
 # print(get_direct_messages_from_users(users_id_list), thread_id_list)
 
-
+# Collect thread ids of direct messages
 for user in users_id_list:
         direct_messages = client.direct_thread_by_participants(user_ids=[user]) 
         
@@ -44,9 +44,13 @@ thread_details = client.direct_thread(thread_id=thread_id_list[0])
 link_to_post = thread_details['messages']
 print(f"Thread Details: {link_to_post}")
 
+# Get user information
+user = client.user_info_by_username(username)
+
+# Upload the photo
 media = client.photo_upload(
-    path=r"image_path",
-    caption="caption_you_want",
+    path="linkedin community post.jpeg",
+    caption="Join GeeksHub",
     usertags=[Usertag(user=user, x=0.5, y=0.5)]
 )
 
