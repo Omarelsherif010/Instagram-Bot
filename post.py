@@ -13,7 +13,7 @@ client.login(username, password)
 username_list = ["danilgreen","polianskiyartem"]
 users_id_list = []
 Messages = {'media_link':[],
-           'video_media_pk': [],}
+           'video_media_pk': []}
 
 
 for user in username_list:
